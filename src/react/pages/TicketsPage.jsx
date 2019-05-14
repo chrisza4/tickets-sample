@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -7,11 +8,9 @@ import TableRow from '@material-ui/core/TableRow'
 import Checkbox from '@material-ui/core/Checkbox'
 import Typography from '@material-ui/core/Typography'
 
-const tickets = require('../../mocks/Tickets.json')
-
-export default class TicketsPage extends React.Component {
+class TicketsPage extends React.Component {
   renderRows = () => {
-    return tickets.map(row => (
+    return this.props.tickets.map(row => (
       <TableRow key={row.id}>
         <TableCell padding="checkbox">
           <Checkbox checked={false} />
@@ -47,3 +46,7 @@ export default class TicketsPage extends React.Component {
     )
   }
 }
+
+export default connect(state => ({
+  tickets: state.tickets.data,
+}))(TicketsPage)
