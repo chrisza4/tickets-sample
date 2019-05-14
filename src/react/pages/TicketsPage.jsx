@@ -10,8 +10,21 @@ import Typography from '@material-ui/core/Typography'
 const tickets = require('../../mocks/Tickets.json')
 
 export default class TicketsPage extends React.Component {
+  renderRows = () => {
+    return tickets.map(row => (
+      <TableRow key={row.id}>
+        <TableCell padding="checkbox">
+          <Checkbox checked={false} />
+        </TableCell>
+        <TableCell>{row.id}</TableCell>
+        <TableCell>{row.title}</TableCell>
+        <TableCell>{row.assignee}</TableCell>
+        <TableCell>{row.status}</TableCell>
+        <TableCell>{row.date}</TableCell>
+      </TableRow>
+    ))
+  }
   render() {
-    const rows = tickets
     return (
       <div>
         <Typography variant="h6" id="tableTitle">
@@ -28,20 +41,7 @@ export default class TicketsPage extends React.Component {
               <TableCell>Date</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.id}>
-                <TableCell padding="checkbox">
-                  <Checkbox checked={false} />
-                </TableCell>
-                <TableCell>{row.id}</TableCell>
-                <TableCell>{row.title}</TableCell>
-                <TableCell>{row.assignee}</TableCell>
-                <TableCell>{row.status}</TableCell>
-                <TableCell>{row.date}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+          <TableBody>{this.renderRows()}</TableBody>
         </Table>
       </div>
     )
