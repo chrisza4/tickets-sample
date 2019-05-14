@@ -5,6 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import IconButton from '@material-ui/core/IconButton'
+import Paper from '@material-ui/core/Paper'
 
 const style = {
   root: {
@@ -20,7 +21,7 @@ const style = {
     marginLeft: '20px',
   },
   content: {
-    marginTop: '10px',
+    margin: '20px',
     padding: '30px 30px',
   },
 }
@@ -51,7 +52,7 @@ export default class MainLayout extends React.Component {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <div style={style.content}>{this.props.children}</div>
+        <Paper style={style.content}>{this.props.children}</Paper>
       </div>
     )
   }
