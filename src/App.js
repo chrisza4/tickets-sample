@@ -1,16 +1,19 @@
 import React from 'react'
-import logo from './logo.svg'
+import { Provider } from 'react-redux'
+import { BrowserRouter, Route } from 'react-router-dom'
+
+import { Redirect } from 'react-router'
+
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TicketsPage from './react/pages/TicketsPage'
 import UsersPage from './react/pages/UsersPage'
 import MainLayout from './react/layout/MainLayout'
-import { BrowserRouter, Route } from 'react-router-dom'
-import { Redirect } from 'react-router'
+import store from './store'
 import './App.css'
 
 function App() {
   return (
-    <div>
+    <Provider store={store}>
       <CssBaseline />
       <MainLayout>
         <BrowserRouter>
@@ -19,7 +22,7 @@ function App() {
           <Route path="/users" exact component={UsersPage} />
         </BrowserRouter>
       </MainLayout>
-    </div>
+    </Provider>
   )
 }
 
