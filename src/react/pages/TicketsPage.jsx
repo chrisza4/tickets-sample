@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import { connect } from 'react-redux'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -9,8 +10,19 @@ import Checkbox from '@material-ui/core/Checkbox'
 import Typography from '@material-ui/core/Typography'
 
 class TicketsPage extends React.Component {
+  state = {
+    tickets: [],
+  }
+
+  componentDidMount = async () => {
+    const response = await axios.get('http://localhost:3333/tickets')
+    this.setState({
+      tickets: response.data.data,
+    })
+  }
+
   renderRows = () => {
-    return this.props.tickets.map(row => (
+    return this.state.tickets.map(row => (
       <TableRow key={row.id}>
         <TableCell padding="checkbox">
           <Checkbox checked={false} />
