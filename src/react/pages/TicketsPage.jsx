@@ -29,7 +29,6 @@ const styles = {
 class TicketsPage extends React.Component {
   state = {
     tickets: [],
-    edittingTicketId: null,
   }
 
   componentDidMount = async () => {
@@ -54,11 +53,6 @@ class TicketsPage extends React.Component {
     ))
   }
 
-  renderTicketDetail = () => {
-    if (!this.state.edittingTicketId) {
-      return
-    }
-  }
   render() {
     return (
       <div>
