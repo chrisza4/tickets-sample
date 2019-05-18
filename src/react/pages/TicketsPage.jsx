@@ -59,6 +59,4 @@ class TicketsPage extends React.Component {
   }
 }
 
-export default connect(state => ({
-  tickets: state.tickets.data,
-}))(TicketsPage)
+export default TicketsPage

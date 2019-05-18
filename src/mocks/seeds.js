@@ -12,10 +12,31 @@ function getRandomTicket() {
   }
 }
 
-const data = []
-for (let i = 0; i < 50; i++) {
-  data.push(getRandomTicket())
+function getRandomUsers() {
+  return {
+    id: faker.random.uuid(),
+    email: faker.internet.email(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    country: faker.address.country(),
+  }
 }
-fs.writeFileSync('./src/mocks/Tickets.json', JSON.stringify(data, false, 2), {
+
+const ticketData = []
+const userData = []
+for (let i = 0; i < 50; i++) {
+  ticketData.push(getRandomTicket())
+  userData.push(getRandomUsers())
+}
+
+fs.writeFileSync(
+  './src/mocks/Tickets.json',
+  JSON.stringify(ticketData, false, 2),
+  {
+    encoding: 'utf8',
+  }
+)
+
+fs.writeFileSync('./src/mocks/Users.json', JSON.stringify(userData, false, 2), {
   encoding: 'utf8',
 })
