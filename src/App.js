@@ -7,6 +7,7 @@ import { Redirect } from 'react-router'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TicketsPage from './react/pages/TicketsPage'
 import UsersPage from './react/pages/UsersPage'
+import LoginPage from './react/pages/LoginPage'
 import MainLayout from './react/layout/MainLayout'
 import store from './store'
 import './App.css'
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" exact render={() => <Redirect to="/tickets" />} />
           <Route path="/tickets" exact component={TicketsPage} />
           <Route path="/users" exact component={UsersPage} />
+          <Route path="/login" exact component={LoginPage} />
         </MainLayout>
       </BrowserRouter>
     </Provider>

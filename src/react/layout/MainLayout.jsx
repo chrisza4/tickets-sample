@@ -12,6 +12,7 @@ import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import PersonIcon from '@material-ui/icons/Person'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -195,6 +196,14 @@ class MainLayout extends React.Component {
             </Link>
           </List>
           <Divider />
+          <Link to="/login">
+            <ListItem button>
+              <ListItemIcon>
+                <ExitToAppIcon />
+              </ListItemIcon>
+              <ListItemText primary="Sign out" />
+            </ListItem>
+          </Link>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
