@@ -7,7 +7,6 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import Checkbox from '@material-ui/core/Checkbox'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -15,6 +14,7 @@ import DoneIcon from '@material-ui/icons/Done'
 import PersonIcon from '@material-ui/icons/Person'
 import CallIcon from '@material-ui/icons/Call'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import TicketRow from '../components/tickets/TicketRow'
 import StatsCard from '../uikit/StatsCard'
 
 import { Divider } from '@material-ui/core'
@@ -61,18 +61,7 @@ export class TicketsPage extends React.Component {
   }
 
   renderRows = () => {
-    return this.props.tickets.map(row => (
-      <TableRow key={row.id}>
-        <TableCell padding="checkbox">
-          <Checkbox checked={false} />
-        </TableCell>
-        <TableCell>{row.id}</TableCell>
-        <TableCell>{row.title}</TableCell>
-        <TableCell>No assignee</TableCell>
-        <TableCell>{row.status}</TableCell>
-        <TableCell>{row.date}</TableCell>
-      </TableRow>
-    ))
+    return this.props.tickets.map(row => <TicketRow ticket={row} />)
   }
 
   render() {
