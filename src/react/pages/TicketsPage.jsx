@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import axios from 'axios'
 import Grid from '@material-ui/core/Grid'
 import Table from '@material-ui/core/Table'
@@ -13,6 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import DoneIcon from '@material-ui/icons/Done'
 import PersonIcon from '@material-ui/icons/Person'
 import CallIcon from '@material-ui/icons/Call'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import StatsCard from '../uikit/StatsCard'
 
 import { Divider } from '@material-ui/core'
@@ -26,20 +28,40 @@ const styles = {
   },
 }
 
-class TicketsPage extends React.Component {
+class TicketsPageContainer extends React.Component {
   state = {
     tickets: [],
+    loading: false,
   }
 
   componentDidMount = async () => {
+    this.setState({ loading: true })
     const response = await axios.get('http://localhost:3333/tickets')
     this.setState({
       tickets: response.data.data,
+      loading: false,
     })
   }
 
+  render() {
+    return (
+      <TicketsPage loading={this.state.loading} tickets={this.state.tickets} />
+    )
+  }
+}
+
+export class TicketsPage extends React.Component {
+  static propTypes = {
+    tickets: PropTypes.array,
+    loading: PropTypes.bool,
+  }
+
+  renderLoading = () => {
+    return <CircularProgress />
+  }
+
   renderRows = () => {
-    return this.state.tickets.map(row => (
+    return this.props.tickets.map(row => (
       <TableRow key={row.id}>
         <TableCell padding="checkbox">
           <Checkbox checked={false} />
@@ -54,6 +76,9 @@ class TicketsPage extends React.Component {
   }
 
   render() {
+    if (this.props.loading) {
+      return this.renderLoading()
+    }
     return (
       <div>
         <Grid container spacing={24}>
@@ -110,4 +135,4 @@ class TicketsPage extends React.Component {
   }
 }
 
-export default TicketsPage
+export default TicketsPageContainer
