@@ -18,6 +18,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline'
 import FaceIcon from '@material-ui/icons/Face'
+import Link from '../uikit/Link'
 
 const drawerWidth = 240
 
@@ -176,18 +177,22 @@ class MainLayout extends React.Component {
           </div>
           <Divider />
           <List>
-            <ListItem button>
-              <ListItemIcon>
-                <WorkOutlineIcon />
-              </ListItemIcon>
-              <ListItemText primary="Tickets" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText primary="Users" />
-            </ListItem>
+            <Link to="/tickets">
+              <ListItem button>
+                <ListItemIcon>
+                  <WorkOutlineIcon />
+                </ListItemIcon>
+                <ListItemText primary="Tickets" />
+              </ListItem>
+            </Link>
+            <Link to="/users">
+              <ListItem button>
+                <ListItemIcon>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText primary="Users" />
+              </ListItem>
+            </Link>
           </List>
           <Divider />
         </Drawer>

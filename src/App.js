@@ -15,13 +15,13 @@ function App() {
   return (
     <Provider store={store}>
       <CssBaseline />
-      <MainLayout>
-        <BrowserRouter>
+      <BrowserRouter>
+        <MainLayout>
           <Route path="/" exact render={() => <Redirect to="/tickets" />} />
           <Route path="/tickets" exact component={TicketsPage} />
           <Route path="/users" exact component={UsersPage} />
-        </BrowserRouter>
-      </MainLayout>
+        </MainLayout>
+      </BrowserRouter>
     </Provider>
   )
 }
