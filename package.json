@@ -3,17 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@storybook/addon-actions": "^5.0.11",
+    "@storybook/addon-links": "^5.0.11",
+    "@storybook/addons": "^5.0.11",
+    "@storybook/react": "^5.0.11",
+    "babel-loader": "^8.0.6",
     "faker": "^4.1.0",
     "husky": "^2.2.0",
     "lint-staged": "^8.1.6",
     "prettier": "^1.17.1",
-    "react-scripts": "3.0.1",
-    "@storybook/react": "^5.0.11",
-    "@storybook/addon-actions": "^5.0.11",
-    "@storybook/addon-links": "^5.0.11",
-    "@storybook/addons": "^5.0.11",
-    "@babel/core": "^7.4.4",
-    "babel-loader": "^8.0.6"
+    "react-scripts": "3.0.1"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.3",
@@ -22,6 +22,7 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "lodash.keyby": "^4.6.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",

@@ -8,12 +8,28 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Checkbox from '@material-ui/core/Checkbox'
 import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import DeleteIcon from '@material-ui/icons/Delete'
+import DoneIcon from '@material-ui/icons/Done'
+import PersonIcon from '@material-ui/icons/Person'
+import CallIcon from '@material-ui/icons/Call'
 import StatsCard from '../uikit/StatsCard'
+
 import { Divider } from '@material-ui/core'
+
+const styles = {
+  buttonIcon: {
+    marginLeft: '5px',
+  },
+  button: {
+    margin: '5px',
+  },
+}
 
 class TicketsPage extends React.Component {
   state = {
     tickets: [],
+    edittingTicketId: null,
   }
 
   componentDidMount = async () => {
@@ -31,11 +47,17 @@ class TicketsPage extends React.Component {
         </TableCell>
         <TableCell>{row.id}</TableCell>
         <TableCell>{row.title}</TableCell>
-        <TableCell>{row.assignee}</TableCell>
+        <TableCell>No assignee</TableCell>
         <TableCell>{row.status}</TableCell>
         <TableCell>{row.date}</TableCell>
       </TableRow>
     ))
+  }
+
+  renderTicketDetail = () => {
+    if (!this.state.edittingTicketId) {
+      return
+    }
   }
   render() {
     return (
@@ -54,12 +76,28 @@ class TicketsPage extends React.Component {
             <StatsCard number={0} description="Tickets waiting" />
           </Grid>
         </Grid>
-        <div style={{ marginBottom: '20px;' }}>&nbsp;</div>
-        <Divider />
-        <div style={{ marginTop: '20px;' }}>&nbsp;</div>
+        <Divider style={{ marginBottom: '20px', marginTop: '20px' }} />
         <Typography variant="h6" id="tableTitle">
           Tickets
         </Typography>
+        <div style={{ marginBottom: '20px', marginTop: '20px' }}>
+          <Button variant="contained" color="primary" style={styles.button}>
+            Mark resolved
+            <DoneIcon style={styles.buttonIcon} />
+          </Button>
+          <Button variant="contained" color="primary" style={styles.button}>
+            Wait for reply
+            <CallIcon style={styles.buttonIcon} />
+          </Button>
+          <Button variant="contained" color="primary" style={styles.button}>
+            Assign
+            <PersonIcon style={styles.buttonIcon} />
+          </Button>
+          <Button variant="contained" color="secondary" style={styles.button}>
+            Delete
+            <DeleteIcon style={styles.buttonIcon} />
+          </Button>
+        </div>
         <Table>
           <TableHead>
             <TableRow>
