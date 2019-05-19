@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+import { compose } from 'recompose'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -14,6 +15,8 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { FormLabel } from '@material-ui/core'
+
+import withLoginRequest from '../advance/withLoginRequest'
 
 const styles = theme => ({
   main: {
@@ -48,16 +51,16 @@ const styles = theme => ({
   },
 })
 
-class SignIn extends React.Component {
+class Login extends React.Component {
   usernameInput = null
   passwordInput = null
 
   render() {
     const props = this.props
     const { classes } = props
-    const signIn = e => {
+    const login = e => {
       e.preventDefault()
-      props.signIn(this.usernameInput.value, this.passwordInput.value)
+      props.onLogin(this.usernameInput.value, this.passwordInput.value)
     }
     return (
       <main className={classes.main}>
@@ -69,7 +72,7 @@ class SignIn extends React.Component {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} onSubmit={signIn}>
+          <form className={classes.form} onSubmit={login}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
               <Input
@@ -119,39 +122,28 @@ class SignIn extends React.Component {
   }
 }
 
-SignIn.propTypes = {
+Login.propTypes = {
   classes: PropTypes.object.isRequired,
-  onSigninRequest: PropTypes.func,
+  onLogin: PropTypes.func,
 }
 
-class SignInContainer extends React.Component {
-  state = {
-    errorMessage: '',
-  }
-  onSignIn = async (username, password) => {
-    try {
-      const res = await axios.post('http://localhost:3333/login', {
-        username,
-        password,
-      })
-      if (res.data.ok) {
-        localStorage.setItem('access_token', res.data.token)
-      }
-    } catch (err) {
-      this.setState({
-        errorMessage: 'Invalid username or password',
-      })
+const login = async (username, password) => {
+  try {
+    const response = await axios.post('http://localhost:3333/login', {
+      username,
+      password,
+    })
+    localStorage.setItem('access_token', response.data.token)
+    return response.data
+  } catch (error) {
+    return {
+      ok: false,
+      err: 'Invalid username or password',
     }
   }
-  render() {
-    return (
-      <SignIn
-        signIn={this.onSignIn}
-        errorMessage={this.state.errorMessage}
-        {...this.props}
-      />
-    )
-  }
 }
 
-export default withStyles(styles)(SignInContainer)
+export default compose(
+  withStyles(styles),
+  withLoginRequest(login, localStorage)
+)(Login)

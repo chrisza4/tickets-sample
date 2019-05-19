@@ -9,6 +9,7 @@ import TicketsPage from './react/pages/TicketsPage'
 import UsersPage from './react/pages/UsersPage'
 import LoginPage from './react/pages/LoginPage'
 import MainLayout from './react/layout/MainLayout'
+import AuthorizedProvider from './react/advance/AuthorizedProvider'
 import store from './store'
 import './App.css'
 
@@ -17,12 +18,28 @@ function App() {
     <Provider store={store}>
       <CssBaseline />
       <BrowserRouter>
-        <MainLayout>
-          <Route path="/" exact render={() => <Redirect to="/tickets" />} />
-          <Route path="/tickets" exact component={TicketsPage} />
-          <Route path="/users" exact component={UsersPage} />
-          <Route path="/login" exact component={LoginPage} />
-        </MainLayout>
+        <AuthorizedProvider
+          render={authorized => {
+            if (authorized) return null
+            return <Route path="/login" exact component={LoginPage} />
+          }}
+        />
+        <AuthorizedProvider
+          render={authorized => {
+            if (!authorized) return null
+            return (
+              <MainLayout>
+                <Route
+                  path="/"
+                  exact
+                  render={() => <Redirect to="/tickets" />}
+                />
+                <Route path="/tickets" exact component={TicketsPage} />
+                <Route path="/users" exact component={UsersPage} />
+              </MainLayout>
+            )
+          }}
+        />
       </BrowserRouter>
     </Provider>
   )
