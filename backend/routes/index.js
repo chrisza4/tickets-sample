@@ -41,6 +41,17 @@ function setup(app) {
       })
     }, 300)
   })
+
+  app.post('/login', (req, res) => {
+    if (req.body.username === 'test' && req.body.password === 'test1') {
+      res.json({
+        ok: true,
+        token: 'some-access-token',
+      })
+    } else {
+      res.status(401).json({ ok: false })
+    }
+  })
 }
 
 module.exports = {
