@@ -1,8 +1,7 @@
 import * as TicketActionTypes from '../actions/TicketActionTypes'
-const tickets = require('../../mocks/Tickets.json')
 
 const initialState = {
-  data: tickets,
+  data: [],
 }
 
 export default function(state = initialState, action) {
