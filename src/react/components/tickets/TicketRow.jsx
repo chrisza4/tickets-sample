@@ -6,14 +6,18 @@ import styles from './TicketsRow.module.css'
 import TableRow from '@material-ui/core/TableRow'
 import Checkbox from '@material-ui/core/Checkbox'
 import TableCell from '@material-ui/core/TableCell'
+import { isUnresolvedForTooLong } from '../../../tickets/domain/TicketDomain'
 
 const TicketRow = props => {
   const { ticket } = props
-  const cssClass =
+  const resolvedRowClass =
     ticket.status === 'resolved'
       ? cx(styles.TicketSolvedCell, 'ax-resolved-row')
       : ''
-
+  const unresolvedTooLongClass = isUnresolvedForTooLong(ticket)
+    ? cx(styles.TicketDangerCell, 'ax-unresolved-too-long-row')
+    : null
+  const cssClass = cx(resolvedRowClass, unresolvedTooLongClass)
   return (
     <TableRow key={ticket.id}>
       <TableCell padding="checkbox">

@@ -1,3 +1,6 @@
 .TicketSolvedCell {
   color: green;
 }
+.TicketDangerCell {
+  color: red;
+}
