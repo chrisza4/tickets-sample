@@ -1,6 +1,10 @@
 import React from 'react'
-import axios from 'axios'
+import PropTypes from 'prop-types'
+import { compose } from 'recompose'
 import { connect } from 'react-redux'
+import { fetchUsers } from '../../users/actions/UserActions'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import withFetchData from '../advance/withFetchData'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -10,19 +14,13 @@ import Checkbox from '@material-ui/core/Checkbox'
 import Typography from '@material-ui/core/Typography'
 
 class UsersPage extends React.Component {
-  state = {
-    users: [],
-  }
-
-  componentDidMount = async () => {
-    const response = await axios.get('http://localhost:3333/users')
-    this.setState({
-      users: response.data.data,
-    })
+  static propTypes = {
+    users: PropTypes.array,
+    loadState: PropTypes.string,
   }
 
   renderRows = () => {
-    return this.state.users.map((row, index) => (
+    return this.props.users.map((row, index) => (
       <TableRow key={row.id}>
         <TableCell padding="checkbox">
           <Checkbox checked={false} />
@@ -59,4 +57,10 @@ class UsersPage extends React.Component {
   }
 }
 
-export default UsersPage
+export default compose(
+  connect(state => ({
+    users: state.users.users,
+    loadState: state.users.loadState,
+  })),
+  withFetchData(fetchUsers, <CircularProgress />)
+)(UsersPage)

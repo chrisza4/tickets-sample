@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
+import { compose } from 'recompose'
+import { connect } from 'react-redux'
+import { fetchTickets } from '../../tickets/actions/TicketActions'
+import LoadState from '../../loadState/LoadState'
 import Grid from '@material-ui/core/Grid'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -18,6 +21,7 @@ import TicketRow from '../components/tickets/TicketRow'
 import StatsCard from '../uikit/StatsCard'
 
 import { Divider } from '@material-ui/core'
+import withFetchData from '../advance/withFetchData'
 
 const styles = {
   buttonIcon: {
@@ -28,36 +32,10 @@ const styles = {
   },
 }
 
-class TicketsPageContainer extends React.Component {
-  state = {
-    tickets: [],
-    loading: false,
-  }
-
-  componentDidMount = async () => {
-    this.setState({ loading: true })
-    const response = await axios.get('http://localhost:3333/tickets')
-    this.setState({
-      tickets: response.data.data,
-      loading: false,
-    })
-  }
-
-  render() {
-    return (
-      <TicketsPage loading={this.state.loading} tickets={this.state.tickets} />
-    )
-  }
-}
-
 export class TicketsPage extends React.Component {
   static propTypes = {
     tickets: PropTypes.array,
-    loading: PropTypes.bool,
-  }
-
-  renderLoading = () => {
-    return <CircularProgress />
+    loadState: PropTypes.string,
   }
 
   renderRows = () => {
@@ -65,7 +43,7 @@ export class TicketsPage extends React.Component {
   }
 
   render() {
-    if (this.props.loading) {
+    if (this.props.loadState === LoadState.LOADING) {
       return this.renderLoading()
     }
     return (
@@ -124,4 +102,10 @@ export class TicketsPage extends React.Component {
   }
 }
 
-export default TicketsPageContainer
+export default compose(
+  connect(state => ({
+    loadState: state.tickets.loadState,
+    tickets: state.tickets.tickets,
+  })),
+  withFetchData(fetchTickets, <CircularProgress />)
+)(TicketsPage)
