@@ -3,24 +3,23 @@ import PropTypes from 'prop-types'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { fetchTickets } from '../../tickets/actions/TicketActions'
-import LoadState from '../../loadState/LoadState'
-import Grid from '@material-ui/core/Grid'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import { Switch } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import DeleteIcon from '@material-ui/icons/Delete'
 import DoneIcon from '@material-ui/icons/Done'
 import PersonIcon from '@material-ui/icons/Person'
 import CallIcon from '@material-ui/icons/Call'
+import { Divider } from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import TicketRow from '../components/tickets/TicketRow'
-import StatsCard from '../uikit/StatsCard'
-
-import { Divider } from '@material-ui/core'
+import TicketStats from '../components/tickets/TicketsStats'
+import LoadState from '../../loadState/LoadState'
 import withFetchData from '../advance/withFetchData'
 
 const styles = {
@@ -48,20 +47,7 @@ export class TicketsPage extends React.Component {
     }
     return (
       <div>
-        <Grid container spacing={24}>
-          <Grid item xs={3}>
-            <StatsCard number={0} description="Tickets solved" />
-          </Grid>
-          <Grid item xs={3}>
-            <StatsCard number={0} description="Tickets assigned" />
-          </Grid>
-          <Grid item xs={3}>
-            <StatsCard number={0} description="Tickets pending" />
-          </Grid>
-          <Grid item xs={3}>
-            <StatsCard number={0} description="Tickets waiting" />
-          </Grid>
-        </Grid>
+        <TicketStats />
         <Divider style={{ marginBottom: '20px', marginTop: '20px' }} />
         <Typography variant="h6" id="tableTitle">
           Tickets
@@ -83,6 +69,8 @@ export class TicketsPage extends React.Component {
             Delete
             <DeleteIcon style={styles.buttonIcon} />
           </Button>
+          <Switch checked={this.props.showResolved} color="primary" /> Show
+          resolved
         </div>
         <Table>
           <TableHead>
@@ -106,6 +94,7 @@ export default compose(
   connect(state => ({
     loadState: state.tickets.loadState,
     tickets: state.tickets.tickets,
+    showResolved: state.tickets.showResolved,
   })),
   withFetchData(fetchTickets, <CircularProgress />)
 )(TicketsPage)

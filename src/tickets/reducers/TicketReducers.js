@@ -4,6 +4,7 @@ import LoadState from '../../loadState/LoadState'
 export const initialState = {
   loadState: LoadState.NONE,
   tickets: [],
+  showResolved: true,
 }
 
 export default function(state = initialState, action) {
