@@ -11,7 +11,7 @@ const withLoginRequest = (
     onLogin = async (username, password) => {
       const loginResult = await loginFunc(username, password)
       if (loginResult.ok) {
-        localStorage.setItem('access_token', loginResult.token)
+        injectedLocalStorage.setItem('access_token', loginResult.token)
       } else {
         this.setState({
           errorMessage: loginResult.err,
