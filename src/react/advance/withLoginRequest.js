@@ -1,6 +1,9 @@
 import React from 'react'
 
-const withLoginRequest = (loginFunc, localStorage) => WrappedComponent => {
+const withLoginRequest = (
+  loginFunc,
+  injectedLocalStorage = localStorage
+) => WrappedComponent => {
   return class WithLogin extends React.Component {
     state = {
       errorMessage: '',

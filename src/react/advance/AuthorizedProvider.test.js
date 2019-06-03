@@ -14,7 +14,7 @@ describe('AuthorizedProvider', () => {
           authorized ? (
             <div className="ax-auth" />
           ) : (
-            <div className="ax-unauth" />
+            <div className="ax-not-auth" />
           )
         }
       />
@@ -33,11 +33,11 @@ describe('AuthorizedProvider', () => {
           authorized ? (
             <div className="ax-auth" />
           ) : (
-            <div className="ax-unauth" />
+            <div className="ax-not-auth" />
           )
         }
       />
     )
-    expect(wrapper.exists('.ax-unauth')).toBeTruthy()
+    expect(wrapper.exists('.ax-not-auth')).toBeTruthy()
   })
 })
