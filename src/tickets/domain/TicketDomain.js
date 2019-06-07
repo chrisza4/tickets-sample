@@ -5,3 +5,7 @@ export function isUnresolvedForTooLong(ticket) {
     moment(ticket.date).isBefore(moment().subtract(5, 'days'))
   )
 }
+
+export function isAssigned(ticket) {
+  return ticket.assignee && ticket.status !== 'pending'
+}

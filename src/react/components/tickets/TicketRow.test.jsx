@@ -30,7 +30,7 @@ describe('TicketRow', () => {
     description:
       'Veniam impedit commodi molestias tempora iure inventore. In dolor consequatur maxime. Consequuntur velit beatae est laboriosam quo qui dicta fuga. Natus aperiam in. Omnis voluptatum repellat magnam veniam amet aut distinctio dolores. Deleniti mollitia officia sunt.\n \rEt nisi omnis. Maxime optio excepturi necessitatibus qui suscipit est. Libero soluta dignissimos assumenda et aut ab voluptatem omnis velit. Molestiae ex molestiae eligendi possimus rem.\n \rTempora ea ipsum. Iste aut veniam possimus. Dolor adipisci voluptas a. Et consectetur qui qui cum quam accusamus itaque rerum harum. Ex error error beatae quo dolorem maiores commodi qui sequi. Eum et omnis voluptatem ut.',
     assignee: 'Klein',
-    status: 'unresolved',
+    status: 'pending',
     date: '2019-01-19T04:47:32.998Z',
   }
 
