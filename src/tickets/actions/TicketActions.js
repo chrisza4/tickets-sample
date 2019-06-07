@@ -18,3 +18,9 @@ export async function fetchTickets(reduxStore = store) {
     })
   }
 }
+
+export function toggleResolved() {
+  return {
+    type: TicketActionTypes.TICKETS_TOGGLE_RESOLVED,
+  }
+}

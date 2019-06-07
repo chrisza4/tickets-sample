@@ -131,12 +131,36 @@ describe('selectDisplayedTickets', () => {
       mockTicket({ id: 'ticket3', status: 'pending' }),
       mockTicket({ id: 'ticket4', status: 'resolved' }),
     ]
-    const action = {
+    const fetchAction = {
       type: TicketActionTypes.TICKETS_FETCHED,
       data,
     }
     const newState = {
-      tickets: TicketReducers(initialState, action),
+      tickets: TicketReducers(initialState, fetchAction),
     }
+    const actual = TicketSelectors.selectDisplayedTickets(newState)
+    expect(actual).toEqual(data)
+  })
+
+  it('should return only resolved tickets when user want to show only resolved tickets', () => {
+    const data = [
+      mockTicket({ id: 'ticket1', status: 'wait for reply' }),
+      mockTicket({ id: 'ticket4', status: 'resolved' }),
+    ]
+    const fetchAction = {
+      type: TicketActionTypes.TICKETS_FETCHED,
+      data,
+    }
+    const toggleAction = {
+      type: TicketActionTypes.TICKETS_TOGGLE_RESOLVED,
+    }
+    const newState = {
+      tickets: TicketReducers(
+        TicketReducers(initialState, fetchAction),
+        toggleAction
+      ),
+    }
+    const actual = TicketSelectors.selectDisplayedTickets(newState)
+    expect(actual).toEqual([data[1]])
   })
 })

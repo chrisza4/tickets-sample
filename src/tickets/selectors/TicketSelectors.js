@@ -37,3 +37,10 @@ export const selectTicketsPendingCount = createSelector(
     return tickets.filter(t => t.status === 'pending').length
   }
 )
+
+export const selectDisplayedTickets = createSelector(
+  [selectTickets, selectResolvedTickets, selectShowResolved],
+  (tickets, resolvedTickets, showResolved) => {
+    return showResolved ? resolvedTickets : tickets
+  }
+)

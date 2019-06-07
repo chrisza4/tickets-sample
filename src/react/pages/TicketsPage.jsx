@@ -2,7 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
-import { fetchTickets } from '../../tickets/actions/TicketActions'
+import {
+  fetchTickets,
+  toggleResolved,
+} from '../../tickets/actions/TicketActions'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -21,6 +24,7 @@ import TicketRow from '../components/tickets/TicketRow'
 import TicketStats from '../components/tickets/TicketsStats'
 import LoadState from '../../loadState/LoadState'
 import withFetchData from '../advance/withFetchData'
+import { selectDisplayedTickets } from '../../tickets/selectors/TicketSelectors'
 
 const styles = {
   buttonIcon: {
@@ -35,6 +39,7 @@ export class TicketsPage extends React.Component {
   static propTypes = {
     tickets: PropTypes.array,
     loadState: PropTypes.string,
+    toggleResolved: PropTypes.func,
   }
 
   renderRows = () => {
@@ -69,8 +74,12 @@ export class TicketsPage extends React.Component {
             Delete
             <DeleteIcon style={styles.buttonIcon} />
           </Button>
-          <Switch checked={this.props.showResolved} color="primary" /> Show
-          resolved
+          <Switch
+            checked={this.props.showResolved}
+            onChange={() => this.props.toggleResolved()}
+            color="primary"
+          />{' '}
+          Show resolved
         </div>
         <Table>
           <TableHead>
@@ -91,10 +100,19 @@ export class TicketsPage extends React.Component {
 }
 
 export default compose(
-  connect(state => ({
-    loadState: state.tickets.loadState,
-    tickets: state.tickets.tickets,
-    showResolved: state.tickets.showResolved,
-  })),
+  connect(
+    state => ({
+      loadState: state.tickets.loadState,
+      tickets: selectDisplayedTickets(state),
+      showResolved: state.tickets.showResolved,
+    }),
+    dispatch => {
+      console.log('D:', dispatch)
+      return {
+        toggleResolved: () => dispatch(toggleResolved()),
+      }
+    }
+  ),
+
   withFetchData(fetchTickets, <CircularProgress />)
 )(TicketsPage)
