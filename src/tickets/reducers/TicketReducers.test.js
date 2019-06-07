@@ -29,4 +29,14 @@ describe('TicketReducer', () => {
     const newState = TicketReducers(initialState, action)
     expect(newState.loadState).toEqual(LoadState.ERROR)
   })
+
+  it('Given recevied TICKETS_TOGGLE_RESOLVED, switch resolved', () => {
+    const action = {
+      type: TicketActionTypes.TICKETS_TOGGLE_RESOLVED,
+    }
+    const newState = TicketReducers(initialState, action)
+    expect(newState.showResolved).toBeTruthy()
+    const nextState = TicketReducers(newState, action)
+    expect(nextState.showResolved).toBeFalsy()
+  })
 })

@@ -121,3 +121,22 @@ describe('selectTicketsPendingCount', () => {
     expect(actual).toEqual(3)
   })
 })
+
+describe('selectDisplayedTickets', () => {
+  it('should return all tickets when user want to show all tickets', () => {
+    const data = [
+      mockTicket({ id: 'ticket1', status: 'wait for reply' }),
+      mockTicket({ id: 'ticket5', status: 'pending' }),
+      mockTicket({ id: 'ticket2', status: 'pending' }),
+      mockTicket({ id: 'ticket3', status: 'pending' }),
+      mockTicket({ id: 'ticket4', status: 'resolved' }),
+    ]
+    const action = {
+      type: TicketActionTypes.TICKETS_FETCHED,
+      data,
+    }
+    const newState = {
+      tickets: TicketReducers(initialState, action),
+    }
+  })
+})
