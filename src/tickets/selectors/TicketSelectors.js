@@ -23,3 +23,17 @@ export const selectAssignedTicketsCount = createSelector(
     return tickets.filter(t => isAssigned(t)).length
   }
 )
+
+export const selectWaitingTicketsCount = createSelector(
+  selectTickets,
+  tickets => {
+    return tickets.filter(t => t.status === 'wait for reply').length
+  }
+)
+
+export const selectTicketsPendingCount = createSelector(
+  selectTickets,
+  tickets => {
+    return tickets.filter(t => t.status === 'pending').length
+  }
+)

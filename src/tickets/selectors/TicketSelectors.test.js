@@ -79,3 +79,45 @@ describe('selectAssignedTicketsCount', () => {
     expect(actual).toEqual(4)
   })
 })
+
+describe('selectWaitingTicketsCount', () => {
+  it('should return waiting ticket', () => {
+    const data = [
+      mockTicket({ id: 'ticket1', status: 'wait for reply' }),
+      mockTicket({ id: 'ticket5', status: 'wait for reply' }),
+      mockTicket({ id: 'ticket2', status: 'pending' }),
+      mockTicket({ id: 'ticket3', status: 'wait for reply' }),
+      mockTicket({ id: 'ticket4', status: 'contacted' }),
+    ]
+    const action = {
+      type: TicketActionTypes.TICKETS_FETCHED,
+      data,
+    }
+    const newState = {
+      tickets: TicketReducers(initialState, action),
+    }
+    const actual = TicketSelectors.selectWaitingTicketsCount(newState)
+    expect(actual).toEqual(3)
+  })
+})
+
+describe('selectTicketsPendingCount', () => {
+  it('should return waiting ticket', () => {
+    const data = [
+      mockTicket({ id: 'ticket1', status: 'wait for reply' }),
+      mockTicket({ id: 'ticket5', status: 'pending' }),
+      mockTicket({ id: 'ticket2', status: 'pending' }),
+      mockTicket({ id: 'ticket3', status: 'pending' }),
+      mockTicket({ id: 'ticket4', status: 'contacted' }),
+    ]
+    const action = {
+      type: TicketActionTypes.TICKETS_FETCHED,
+      data,
+    }
+    const newState = {
+      tickets: TicketReducers(initialState, action),
+    }
+    const actual = TicketSelectors.selectTicketsPendingCount(newState)
+    expect(actual).toEqual(3)
+  })
+})
