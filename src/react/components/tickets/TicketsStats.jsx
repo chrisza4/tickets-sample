@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { selectResolvedTicketsCount } from '../../../tickets/selectors/TicketSelectors'
 import Grid from '@material-ui/core/Grid'
 import StatsCard from '../../uikit/StatsCard'
 
@@ -47,4 +49,6 @@ class TicketStats extends React.Component {
   }
 }
 
-export default TicketStats
+export default connect(state => ({
+  solved: selectResolvedTicketsCount(state),
+}))(TicketStats)
