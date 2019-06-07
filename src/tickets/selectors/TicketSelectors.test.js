@@ -58,3 +58,24 @@ describe('selectResolvedTicketsCount', () => {
     expect(actual).toEqual(2)
   })
 })
+
+describe('selectAssignedTicketsCount', () => {
+  it('should return only resolved tickets', () => {
+    const data = [
+      mockTicket({ id: 'ticket1', status: 'resolved' }),
+      mockTicket({ id: 'ticket5', status: 'resolved' }),
+      mockTicket({ id: 'ticket2', status: 'pending' }),
+      mockTicket({ id: 'ticket3', status: 'wait for reply' }),
+      mockTicket({ id: 'ticket4', status: 'contacted' }),
+    ]
+    const action = {
+      type: TicketActionTypes.TICKETS_FETCHED,
+      data,
+    }
+    const newState = {
+      tickets: TicketReducers(initialState, action),
+    }
+    const actual = TicketSelectors.selectAssignedTicketsCount(newState)
+    expect(actual).toEqual(4)
+  })
+})
