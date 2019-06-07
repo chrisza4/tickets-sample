@@ -22,7 +22,10 @@ class TicketStats extends React.Component {
     return (
       <Grid container spacing={24}>
         <Grid item xs={3}>
-          <StatsCard number={this.props.solved} description="Tickets solved" />
+          <StatsCard
+            number={this.props.pending}
+            description="Tickets pending"
+          />
         </Grid>
         <Grid item xs={3}>
           <StatsCard
@@ -32,15 +35,12 @@ class TicketStats extends React.Component {
         </Grid>
         <Grid item xs={3}>
           <StatsCard
-            number={this.props.pending}
-            description="Tickets pending"
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <StatsCard
             number={this.props.waiting}
             description="Tickets waiting"
           />
+        </Grid>
+        <Grid item xs={3}>
+          <StatsCard number={this.props.solved} description="Tickets solved" />
         </Grid>
       </Grid>
     )
