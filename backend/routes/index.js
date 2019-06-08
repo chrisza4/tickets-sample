@@ -3,6 +3,7 @@ const {
   getUsers,
   assignTicket,
   markTicketResolve,
+  setStatus,
 } = require('./data')
 
 function setup(app) {
@@ -51,6 +52,16 @@ function setup(app) {
     } else {
       res.status(401).json({ ok: false })
     }
+  })
+
+  app.post('/tickets/status', (req, res) => {
+    const { ids, status } = req.body
+    const statuses = ['resolved', 'wait for reply', 'contacted', 'pending']
+    if (!statuses.includes(status)) {
+      res.status(400).json({ ok: false, error: 'Invalid status' })
+    }
+    const tickets = setStatus(ids, status)
+    return res.json({ ok: true, tickets })
   })
 }
 

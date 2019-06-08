@@ -31,9 +31,20 @@ function assignTicket(ticketId, userId) {
   return
 }
 
+function setStatus(ticketIds, status) {
+  const tickets = ticketIds
+    .map(ticketId => ticketMap[ticketId])
+    .filter(t => !!t)
+  for (const t of tickets) {
+    t.status = status
+  }
+  return tickets
+}
+
 module.exports = {
   getTickets,
   getUsers,
   markTicketResolve,
   assignTicket,
+  setStatus,
 }
