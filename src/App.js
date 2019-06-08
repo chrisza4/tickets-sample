@@ -20,24 +20,29 @@ function App() {
       <BrowserRouter>
         <AuthorizedProvider
           render={authorized => {
+            const mainPath = authorized ? '/login' : '/tickets'
+            return (
+              <Route path="/" exact render={() => <Redirect to={mainPath} />} />
+            )
+          }}
+        />
+        <AuthorizedProvider
+          render={authorized => {
             if (authorized) return null
             return <Route path="/login" exact component={LoginPage} />
           }}
         />
         <AuthorizedProvider
           render={authorized => {
-            if (!authorized) return null
-            return (
-              <MainLayout>
-                <Route
-                  path="/"
-                  exact
-                  render={() => <Redirect to="/tickets" />}
-                />
-                <Route path="/tickets" exact component={TicketsPage} />
-                <Route path="/users" exact component={UsersPage} />
-              </MainLayout>
-            )
+            if (authorized) {
+              return (
+                <MainLayout>
+                  <Route path="/tickets" exact component={TicketsPage} />
+                  <Route path="/users" exact component={UsersPage} />
+                </MainLayout>
+              )
+            }
+            return null
           }}
         />
       </BrowserRouter>

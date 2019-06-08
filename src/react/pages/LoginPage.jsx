@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
-import { compose } from 'recompose'
+import { compose, withProps } from 'recompose'
+import { withRouter } from 'react-router-dom'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -15,8 +15,7 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { FormLabel } from '@material-ui/core'
-
-import withLoginRequest from '../advance/withLoginRequest'
+import { login } from '../../auth/actions/AuthActions'
 
 const styles = theme => ({
   main: {
@@ -57,10 +56,16 @@ class Login extends React.Component {
 
   render() {
     const props = this.props
-    const { classes } = props
-    const login = e => {
+    const { classes, history } = props
+    const login = async e => {
       e.preventDefault()
-      props.onLogin(this.usernameInput.value, this.passwordInput.value)
+      const result = await props.onLogin(
+        this.usernameInput.value,
+        this.passwordInput.value
+      )
+      if (result.ok) {
+        history.push('/tickets')
+      }
     }
     return (
       <main className={classes.main}>
@@ -127,23 +132,10 @@ Login.propTypes = {
   onLogin: PropTypes.func,
 }
 
-const login = async (username, password) => {
-  try {
-    const response = await axios.post('http://localhost:3333/login', {
-      username,
-      password,
-    })
-    localStorage.setItem('access_token', response.data.token)
-    return response.data
-  } catch (error) {
-    return {
-      ok: false,
-      err: 'Invalid username or password',
-    }
-  }
-}
-
 export default compose(
   withStyles(styles),
-  withLoginRequest(login, localStorage)
+  withProps({
+    onLogin: login,
+  }),
+  withRouter
 )(Login)

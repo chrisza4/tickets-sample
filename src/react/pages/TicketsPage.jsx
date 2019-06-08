@@ -107,7 +107,6 @@ export default compose(
       showResolved: state.tickets.showResolved,
     }),
     dispatch => {
-      console.log('D:', dispatch)
       return {
         toggleResolved: () => dispatch(toggleResolved()),
       }

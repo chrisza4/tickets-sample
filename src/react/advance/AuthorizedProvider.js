@@ -1,17 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { selectAccessToken } from '../../auth/selectors/AuthSelectors'
 
-export default class AuthorizedProvider extends React.Component {
+export class AuthorizedProvider extends React.Component {
   static propTypes = {
     render: PropTypes.func,
-    localStorage: PropTypes.object,
-  }
-  static defaultProps = {
-    localStorage: localStorage,
+    token: PropTypes.string,
   }
 
   render() {
-    const authorized = !!this.props.localStorage.getItem('access_token')
-    return this.props.render(authorized)
+    return this.props.render(!!this.props.token)
   }
 }
+
+export default connect(state => ({
+  token: selectAccessToken(state),
+}))(AuthorizedProvider)

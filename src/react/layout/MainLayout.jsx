@@ -20,6 +20,9 @@ import ListItemText from '@material-ui/core/ListItemText'
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline'
 import FaceIcon from '@material-ui/icons/Face'
 import Link from '../uikit/Link'
+import { withProps, compose } from 'recompose'
+import { signout } from '../../auth/actions/AuthActions'
+import { withRouter } from 'react-router-dom'
 
 const drawerWidth = 240
 
@@ -103,6 +106,7 @@ const styles = theme => ({
 class MainLayout extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    signout: PropTypes.func,
     children: PropTypes.node,
   }
 
@@ -196,14 +200,18 @@ class MainLayout extends React.Component {
             </Link>
           </List>
           <Divider />
-          <Link to="/login">
-            <ListItem button>
-              <ListItemIcon>
-                <ExitToAppIcon />
-              </ListItemIcon>
-              <ListItemText primary="Sign out" />
-            </ListItem>
-          </Link>
+          <ListItem
+            button
+            onClick={() => {
+              this.props.signout()
+              this.props.history.push('/login')
+            }}
+          >
+            <ListItemIcon>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText primary="Sign out" />
+          </ListItem>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
@@ -214,4 +222,8 @@ class MainLayout extends React.Component {
   }
 }
 
-export default withStyles(styles)(MainLayout)
+export default compose(
+  withStyles(styles),
+  withProps({ signout: signout }),
+  withRouter
+)(MainLayout)
