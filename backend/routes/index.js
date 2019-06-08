@@ -61,7 +61,7 @@ function setup(app) {
       res.status(400).json({ ok: false, error: 'Invalid status' })
     }
     const tickets = setStatus(ids, status)
-    return res.json({ ok: true, tickets })
+    return res.json({ ok: true, data: tickets })
   })
 }
 
