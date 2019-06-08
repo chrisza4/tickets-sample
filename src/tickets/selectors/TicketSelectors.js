@@ -3,13 +3,15 @@ import { getReportableStatus } from '../domain/TicketDomain'
 
 export const selectLoadState = state => state.tickets.loadState
 export const selectTickets = state => Object.values(state.tickets.tickets)
+export const selectTicketMap = state => state.tickets.tickets
 export const selectShowResolved = state => state.tickets.showResolved
 export const selectSelectedTicketIds = state => state.tickets.selectedTicketIds
+export const selectTicketIndex = state => state.tickets.index
 
 export const selectResolvedTickets = createSelector(
-  selectTickets,
-  tickets => {
-    return tickets.filter(t => getReportableStatus(t) === 'resolved')
+  [selectTicketMap, selectTicketIndex],
+  (tickets, index) => {
+    return index.resolved.map(id => tickets[id])
   }
 )
 

@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import * as TicketActionTypes from '../actions/TicketActionTypes'
+import { buildTicketIndexes } from './TicketIndexes'
 import LoadState from '../../loadState/LoadState'
 import { keyBy } from '../../utils/keyBy'
 
@@ -8,6 +9,9 @@ export const initialState = {
   tickets: {},
   showResolved: false,
   selectedTicketIds: [],
+  index: {
+    resolved: [],
+  },
 }
 
 export default function(state = initialState, action) {
@@ -27,6 +31,7 @@ export default function(state = initialState, action) {
         }
       }
     case TicketActionTypes.TICKETS_FETCHED:
+      const ticketIndex = buildTicketIndexes(state.index, action.data)
       return {
         ...state,
         tickets: {
@@ -34,6 +39,7 @@ export default function(state = initialState, action) {
           ...keyBy(action.data, t => t.id),
         },
         loadState: LoadState.LOADED,
+        index: ticketIndex,
       }
     case TicketActionTypes.TICKETS_FETCHING:
       return {
