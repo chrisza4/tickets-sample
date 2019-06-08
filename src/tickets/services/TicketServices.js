@@ -32,3 +32,19 @@ export async function setStatus(ids, status) {
     }
   }
 }
+
+export async function deleteTickets(ids) {
+  try {
+    const promises = ids.map(id =>
+      authenticatedRest('DELETE', `/tickets/${id}`)
+    )
+    await Promise.all(promises)
+    return {
+      ok: true,
+    }
+  } catch (err) {
+    return {
+      ok: false,
+    }
+  }
+}

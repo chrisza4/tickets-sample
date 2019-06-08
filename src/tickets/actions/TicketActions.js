@@ -34,7 +34,6 @@ export function toggleResolved() {
 
 export async function setStatus(ids, status, reduxStore = store) {
   const response = await TicketServices.setStatus(ids, status)
-  console.log(response)
   if (response.ok) {
     reduxStore.dispatch({
       type: TicketActionTypes.TICKETS_FETCHED,
@@ -43,6 +42,16 @@ export async function setStatus(ids, status, reduxStore = store) {
   } else {
     reduxStore.dispatch({
       type: TicketActionTypes.TICKETS_FETCH_ERROR,
+    })
+  }
+}
+
+export async function deleteTickets(ids, reduxStore = store) {
+  const response = await TicketServices.deleteTickets(ids)
+  if (response.ok) {
+    reduxStore.dispatch({
+      type: TicketActionTypes.TICKET_DELETED,
+      ids: ids,
     })
   }
 }

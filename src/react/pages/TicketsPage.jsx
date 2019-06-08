@@ -7,6 +7,7 @@ import {
   toggleResolved,
   selectTicket,
   setStatus,
+  deleteTickets,
 } from '../../tickets/actions/TicketActions'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -54,6 +55,10 @@ export class TicketsPage extends React.Component {
 
   onSetStatus = status => {
     setStatus(this.props.selectedIds, status)
+  }
+
+  onDelete = () => {
+    deleteTickets(this.props.selectedIds)
   }
 
   isTicketSelected = ticketId => {
@@ -104,7 +109,12 @@ export class TicketsPage extends React.Component {
             Assign
             <PersonIcon style={styles.buttonIcon} />
           </Button>
-          <Button variant="contained" color="secondary" style={styles.button}>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={styles.button}
+            onClick={this.onDelete}
+          >
             Delete
             <DeleteIcon style={styles.buttonIcon} />
           </Button>

@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import * as TicketActionTypes from '../actions/TicketActionTypes'
 import LoadState from '../../loadState/LoadState'
 import { keyBy } from '../../utils/keyBy'
@@ -49,6 +50,15 @@ export default function(state = initialState, action) {
         ...state,
         showResolved: !state.showResolved,
       }
+    case TicketActionTypes.TICKET_DELETED: {
+      const restTickets = _.omitBy(state.tickets, (val, key) => {
+        return action.ids.some(id => String(id) === String(key))
+      })
+      return {
+        ...state,
+        tickets: restTickets,
+      }
+    }
     default:
       return state
   }

@@ -23,6 +23,14 @@ describe('selectTickets', () => {
     }
     const actual = TicketSelectors.selectTickets(newState)
     expect(actual).toEqual(data)
+    const afterDelete = {
+      tickets: TicketReducers(newState.tickets, {
+        type: TicketActionTypes.TICKET_DELETED,
+        ids: ['ticket1'],
+      }),
+    }
+    const actual2 = TicketSelectors.selectTickets(afterDelete)
+    expect(actual2).toEqual([data[1]])
   })
 })
 
