@@ -1,9 +1,10 @@
 import * as TicketActionTypes from '../actions/TicketActionTypes'
 import LoadState from '../../loadState/LoadState'
+import { keyBy } from '../../utils/keyBy'
 
 export const initialState = {
   loadState: LoadState.NONE,
-  tickets: [],
+  tickets: {},
   showResolved: false,
 }
 
@@ -12,7 +13,7 @@ export default function(state = initialState, action) {
     case TicketActionTypes.TICKETS_FETCHED:
       return {
         ...state,
-        tickets: action.data,
+        tickets: keyBy(action.data, t => t.id),
         loadState: LoadState.LOADED,
       }
     case TicketActionTypes.TICKETS_FETCHING:

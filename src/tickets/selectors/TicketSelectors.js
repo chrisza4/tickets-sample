@@ -2,7 +2,7 @@ import { createSelector } from 'reselect'
 import { getReportableStatus } from '../domain/TicketDomain'
 
 export const selectLoadState = state => state.tickets.loadState
-export const selectTickets = state => state.tickets.tickets
+export const selectTickets = state => Object.values(state.tickets.tickets)
 export const selectShowResolved = state => state.tickets.showResolved
 
 export const selectResolvedTickets = createSelector(
