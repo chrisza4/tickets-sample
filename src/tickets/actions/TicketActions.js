@@ -1,18 +1,18 @@
-import axios from 'axios'
 import * as TicketActionTypes from '../actions/TicketActionTypes'
+import * as TicketServices from '../services/TicketServices'
 import store from '../../store'
 
 export async function fetchTickets(reduxStore = store) {
   reduxStore.dispatch({
     type: TicketActionTypes.TICKETS_FETCHING,
   })
-  try {
-    const response = await axios.get('http://localhost:3333/tickets')
+  const response = await TicketServices.fetchTickets()
+  if (response.ok) {
     reduxStore.dispatch({
       type: TicketActionTypes.TICKETS_FETCHED,
-      data: response.data.data,
+      data: response.tickets,
     })
-  } catch (err) {
+  } else {
     reduxStore.dispatch({
       type: TicketActionTypes.TICKETS_FETCH_ERROR,
     })
