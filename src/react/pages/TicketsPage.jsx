@@ -6,6 +6,7 @@ import {
   fetchTickets,
   toggleResolved,
   selectTicket,
+  setStatus,
 } from '../../tickets/actions/TicketActions'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -51,6 +52,10 @@ export class TicketsPage extends React.Component {
     this.props.onSelect(id)
   }
 
+  onSetStatus = status => {
+    setStatus(this.props.selectedIds, status)
+  }
+
   isTicketSelected = ticketId => {
     return this.props.selectedIds.some(id => id === ticketId)
   }
@@ -77,7 +82,12 @@ export class TicketsPage extends React.Component {
           Tickets
         </Typography>
         <div style={{ marginBottom: '20px', marginTop: '20px' }}>
-          <Button variant="contained" color="primary" style={styles.button}>
+          <Button
+            variant="contained"
+            color="primary"
+            style={styles.button}
+            onClick={() => this.onSetStatus('resolved')}
+          >
             Mark resolved
             <DoneIcon style={styles.buttonIcon} />
           </Button>

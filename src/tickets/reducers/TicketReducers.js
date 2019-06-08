@@ -28,7 +28,10 @@ export default function(state = initialState, action) {
     case TicketActionTypes.TICKETS_FETCHED:
       return {
         ...state,
-        tickets: keyBy(action.data, t => t.id),
+        tickets: {
+          ...state.tickets,
+          ...keyBy(action.data, t => t.id),
+        },
         loadState: LoadState.LOADED,
       }
     case TicketActionTypes.TICKETS_FETCHING:

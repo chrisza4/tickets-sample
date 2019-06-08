@@ -31,3 +31,18 @@ export function toggleResolved() {
     type: TicketActionTypes.TICKETS_TOGGLE_RESOLVED,
   }
 }
+
+export async function setStatus(ids, status, reduxStore = store) {
+  const response = await TicketServices.setStatus(ids, status)
+  console.log(response)
+  if (response.ok) {
+    reduxStore.dispatch({
+      type: TicketActionTypes.TICKETS_FETCHED,
+      data: response.tickets,
+    })
+  } else {
+    reduxStore.dispatch({
+      type: TicketActionTypes.TICKETS_FETCH_ERROR,
+    })
+  }
+}
