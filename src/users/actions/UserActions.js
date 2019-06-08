@@ -1,18 +1,18 @@
-import axios from 'axios'
 import * as UserActionTypes from '../actions/UserActionTypes'
+import * as UserServices from '../services/UserServices'
 import store from '../../store'
 
 export async function fetchUsers() {
   store.dispatch({
     type: UserActionTypes.USERS_FETCHING,
   })
-  try {
-    const response = await axios.get('http://localhost:3333/users')
+  const response = await UserServices.fetchUsers()
+  if (response.ok) {
     store.dispatch({
       type: UserActionTypes.USERS_FETCHED,
-      data: response.data.data,
+      data: response.users,
     })
-  } catch (err) {
+  } else {
     store.dispatch({
       type: UserActionTypes.USERS_FETCH_ERROR,
     })

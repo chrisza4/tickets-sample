@@ -1,11 +1,11 @@
 import { authenticatedRest } from '../../api/client'
 
-export async function fetchTickets() {
+export async function fetchUsers() {
   try {
-    const response = await authenticatedRest('GET', '/tickets')
+    const response = await authenticatedRest('GET', '/users')
     return {
       ok: true,
-      tickets: response.data.data,
+      users: response.data.data,
     }
   } catch (err) {
     return {
