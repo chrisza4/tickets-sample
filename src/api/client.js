@@ -10,7 +10,9 @@ export function authenticatedRest(method, url, data) {
   return axios({
     method,
     url: baseUrl + url,
-    headers: localStorage.getItem('access_token'),
+    headers: {
+      token: localStorage.getItem('access_token'),
+    },
     data,
   })
 }
