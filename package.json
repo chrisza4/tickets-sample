@@ -27,6 +27,7 @@
     "classnames": "^2.2.6",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "lodash": "^4.17.11",
     "lodash.keyby": "^4.6.0",
     "moment": "^2.24.0",
     "react": "^16.8.6",
