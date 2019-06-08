@@ -6,7 +6,7 @@ const ticketMap = keyBy(tickets, ticket => ticket.id)
 const usersMap = keyBy(users, user => user.id)
 
 function getTickets() {
-  return tickets
+  return Object.values(tickets)
 }
 
 function getUsers() {
@@ -41,10 +41,16 @@ function setStatus(ticketIds, status) {
   return tickets
 }
 
+function deleteTicket(ticketId) {
+  delete ticketMap[ticketId]
+  return Object.values(ticketMap)
+}
+
 module.exports = {
   getTickets,
   getUsers,
   markTicketResolve,
   assignTicket,
   setStatus,
+  deleteTicket,
 }

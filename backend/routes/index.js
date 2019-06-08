@@ -4,6 +4,7 @@ const {
   assignTicket,
   markTicketResolve,
   setStatus,
+  deleteTicket,
 } = require('./data')
 
 function setup(app) {
@@ -62,6 +63,15 @@ function setup(app) {
     }
     const tickets = setStatus(ids, status)
     return res.json({ ok: true, data: tickets })
+  })
+
+  app.delete('/tickets/:id', (req, res) => {
+    setTimeout(() => {
+      deleteTicket(req.params.ticketId)
+      res.json({
+        ok: true,
+      })
+    }, 300)
   })
 }
 
