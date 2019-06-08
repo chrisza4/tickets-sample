@@ -1,5 +1,5 @@
-import axios from 'axios'
 import * as AuthActionTypes from './AuthActionTypes'
+import * as AuthService from '../services/AuthService'
 import store from '../../store'
 
 export function AuthInit() {
@@ -15,21 +15,17 @@ export function signout() {
 }
 
 export async function login(username, password) {
-  try {
-    const response = await axios.post('http://localhost:3333/login', {
-      username,
-      password,
-    })
-    localStorage.setItem('access_token', response.data.token)
+  const { token } = await AuthService.login(username, password)
+  if (token) {
+    localStorage.setItem('access_token', token)
     store.dispatch({
       type: AuthActionTypes.AUTH_SUCCESS,
-      token: response.data.token,
+      token,
     })
     return { ok: true }
-  } catch (error) {
+  } else
     return {
       ok: false,
       err: 'Invalid username or password',
     }
-  }
 }
