@@ -91,7 +91,12 @@ export class TicketsPage extends React.Component {
             Mark resolved
             <DoneIcon style={styles.buttonIcon} />
           </Button>
-          <Button variant="contained" color="primary" style={styles.button}>
+          <Button
+            variant="contained"
+            color="primary"
+            style={styles.button}
+            onClick={() => this.onSetStatus('wait for reply')}
+          >
             Wait for reply
             <CallIcon style={styles.buttonIcon} />
           </Button>
