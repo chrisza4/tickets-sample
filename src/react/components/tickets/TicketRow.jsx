@@ -9,7 +9,7 @@ import TableCell from '@material-ui/core/TableCell'
 import { isUnresolvedForTooLong } from '../../../tickets/domain/TicketDomain'
 
 const TicketRow = props => {
-  const { ticket } = props
+  const { ticket, onSelect, selected } = props
   const resolvedRowClass =
     ticket.status === 'resolved'
       ? cx(styles.TicketSolvedCell, 'ax-resolved-row')
@@ -21,7 +21,7 @@ const TicketRow = props => {
   return (
     <TableRow key={ticket.id}>
       <TableCell padding="checkbox">
-        <Checkbox checked={false} />
+        <Checkbox checked={selected} onChange={onSelect} />
       </TableCell>
       <TableCell>
         <span className={cssClass}>{ticket.id}</span>

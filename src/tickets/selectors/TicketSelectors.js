@@ -4,6 +4,7 @@ import { getReportableStatus } from '../domain/TicketDomain'
 export const selectLoadState = state => state.tickets.loadState
 export const selectTickets = state => Object.values(state.tickets.tickets)
 export const selectShowResolved = state => state.tickets.showResolved
+export const selectSelectedTicketIds = state => state.tickets.selectedTicketIds
 
 export const selectResolvedTickets = createSelector(
   selectTickets,

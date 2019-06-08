@@ -3,6 +3,14 @@ import * as TicketSelectors from './TicketSelectors'
 import { mockTicket } from '../TicketMocks'
 import * as TicketActionTypes from '../actions/TicketActionTypes'
 
+function stateWithTickets(data) {
+  const fetchAction = {
+    type: TicketActionTypes.TICKETS_FETCHED,
+    data,
+  }
+  const newState = TicketReducers(initialState, fetchAction)
+  return newState
+}
 describe('selectTickets', () => {
   it('should return tickets', () => {
     const data = [mockTicket({ id: 'ticket1' }), mockTicket({ id: 'ticket2' })]
@@ -162,5 +170,33 @@ describe('selectDisplayedTickets', () => {
     }
     const actual = TicketSelectors.selectDisplayedTickets(newState)
     expect(actual).toEqual([data[1]])
+  })
+})
+
+describe('selectSelectedTicketIds', () => {
+  it('Should select/unselect ids of selected tickets', () => {
+    const data = [
+      mockTicket({ id: 'ticket1', status: 'wait for reply' }),
+      mockTicket({ id: 'ticket4', status: 'resolved' }),
+    ]
+    const state = stateWithTickets(data)
+    const newState = {
+      tickets: TicketReducers(state, {
+        type: TicketActionTypes.TICKET_SELECTED,
+        id: 'ticket1',
+      }),
+    }
+
+    expect(TicketSelectors.selectSelectedTicketIds(newState)).toEqual([
+      'ticket1',
+    ])
+
+    const newState2 = {
+      tickets: TicketReducers(newState.tickets, {
+        type: TicketActionTypes.TICKET_SELECTED,
+        id: 'ticket1',
+      }),
+    }
+    expect(TicketSelectors.selectSelectedTicketIds(newState2)).toEqual([])
   })
 })

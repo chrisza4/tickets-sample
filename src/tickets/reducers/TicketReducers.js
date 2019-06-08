@@ -6,10 +6,25 @@ export const initialState = {
   loadState: LoadState.NONE,
   tickets: {},
   showResolved: false,
+  selectedTicketIds: [],
 }
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case TicketActionTypes.TICKET_SELECTED:
+      if (state.selectedTicketIds.includes(action.id)) {
+        return {
+          ...state,
+          selectedTicketIds: state.selectedTicketIds.filter(
+            id => id !== action.id
+          ),
+        }
+      } else {
+        return {
+          ...state,
+          selectedTicketIds: [...state.selectedTicketIds, action.id],
+        }
+      }
     case TicketActionTypes.TICKETS_FETCHED:
       return {
         ...state,

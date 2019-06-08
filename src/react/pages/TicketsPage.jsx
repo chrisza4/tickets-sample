@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import {
   fetchTickets,
   toggleResolved,
+  selectTicket,
 } from '../../tickets/actions/TicketActions'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -24,7 +25,10 @@ import TicketRow from '../components/tickets/TicketRow'
 import TicketStats from '../components/tickets/TicketsStats'
 import LoadState from '../../loadState/LoadState'
 import withFetchData from '../advance/withFetchData'
-import { selectDisplayedTickets } from '../../tickets/selectors/TicketSelectors'
+import {
+  selectDisplayedTickets,
+  selectSelectedTicketIds,
+} from '../../tickets/selectors/TicketSelectors'
 
 const styles = {
   buttonIcon: {
@@ -38,12 +42,27 @@ const styles = {
 export class TicketsPage extends React.Component {
   static propTypes = {
     tickets: PropTypes.array,
+    selectedIds: PropTypes.array,
     loadState: PropTypes.string,
     toggleResolved: PropTypes.func,
   }
 
+  onSelect = id => {
+    this.props.onSelect(id)
+  }
+
+  isTicketSelected = ticketId => {
+    return this.props.selectedIds.some(id => id === ticketId)
+  }
+
   renderRows = () => {
-    return this.props.tickets.map(row => <TicketRow ticket={row} />)
+    return this.props.tickets.map(row => (
+      <TicketRow
+        ticket={row}
+        selected={this.isTicketSelected(row.id)}
+        onSelect={() => this.onSelect(row.id)}
+      />
+    ))
   }
 
   render() {
@@ -104,11 +123,13 @@ export default compose(
     state => ({
       loadState: state.tickets.loadState,
       tickets: selectDisplayedTickets(state),
+      selectedIds: selectSelectedTicketIds(state),
       showResolved: state.tickets.showResolved,
     }),
     dispatch => {
       return {
         toggleResolved: () => dispatch(toggleResolved()),
+        onSelect: id => dispatch(selectTicket(id)),
       }
     }
   ),
