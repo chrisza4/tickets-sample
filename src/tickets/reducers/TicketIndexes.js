@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 import { getReportableStatus } from '../domain/TicketDomain'
 
-=======
->>>>>>> Make index
 export function buildTicketIndexes(oldIndex, newTickets) {
   // Remove
   const updateIndex = newTickets.reduce(
