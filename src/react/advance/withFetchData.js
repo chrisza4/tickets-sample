@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import LoadState from '../../loadState/LoadState'
+
 const withFetchData = (fetchFunction, loadingState) => BaseComponent => {
   return class WrappedComponent extends React.Component {
     static propTypes = {
