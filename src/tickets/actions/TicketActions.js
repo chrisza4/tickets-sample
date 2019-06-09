@@ -64,6 +64,20 @@ export function* deleteTicketsSaga({ ids }, reduxStore = store) {
   }
 }
 
+export function* updateTicketSagas({ ids, status }) {
+  const response = yield call(TicketServices.setStatus, ids, status)
+  if (response.ok) {
+    yield put({
+      type: TicketActionTypes.TICKET_UPDATED,
+      data: response.tickets,
+    })
+  } else {
+    yield put({
+      type: TicketActionTypes.TICKET_UPDATING_FAILED,
+    })
+  }
+}
+
 export async function deleteTickets(ids) {
   store.dispatch({
     type: TicketActionTypes.TICKET_DELETING,
