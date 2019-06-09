@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { isAssigned } from '../domain/TicketDomain'
+import { getReportableStatus } from '../domain/TicketDomain'
 
 export const selectLoadState = state => state.tickets.loadState
 export const selectTickets = state => state.tickets.tickets
@@ -8,7 +8,7 @@ export const selectShowResolved = state => state.tickets.showResolved
 export const selectResolvedTickets = createSelector(
   selectTickets,
   tickets => {
-    return tickets.filter(t => t.status === 'resolved')
+    return tickets.filter(t => getReportableStatus(t) === 'resolved')
   }
 )
 
@@ -20,21 +20,21 @@ export const selectResolvedTicketsCount = createSelector(
 export const selectAssignedTicketsCount = createSelector(
   selectTickets,
   tickets => {
-    return tickets.filter(t => isAssigned(t)).length
+    return tickets.filter(t => getReportableStatus(t) === 'assigned').length
   }
 )
 
 export const selectWaitingTicketsCount = createSelector(
   selectTickets,
   tickets => {
-    return tickets.filter(t => t.status === 'wait for reply').length
+    return tickets.filter(t => getReportableStatus(t) === 'waiting').length
   }
 )
 
 export const selectTicketsPendingCount = createSelector(
   selectTickets,
   tickets => {
-    return tickets.filter(t => t.status === 'pending').length
+    return tickets.filter(t => getReportableStatus(t) === 'pending').length
   }
 )
 

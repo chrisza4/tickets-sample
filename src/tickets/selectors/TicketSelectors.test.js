@@ -76,7 +76,7 @@ describe('selectAssignedTicketsCount', () => {
       tickets: TicketReducers(initialState, action),
     }
     const actual = TicketSelectors.selectAssignedTicketsCount(newState)
-    expect(actual).toEqual(4)
+    expect(actual).toEqual(1)
   })
 })
 

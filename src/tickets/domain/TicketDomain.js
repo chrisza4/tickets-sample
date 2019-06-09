@@ -6,6 +6,15 @@ export function isUnresolvedForTooLong(ticket) {
   )
 }
 
-export function isAssigned(ticket) {
-  return ticket.assignee && ticket.status !== 'pending'
+export function getReportableStatus(ticket) {
+  if (!ticket.assignee || ticket.status === 'pending') {
+    return 'pending'
+  }
+  if (ticket.status === 'contacted') {
+    return 'assigned'
+  }
+  if (ticket.status === 'wait for reply') {
+    return 'waiting'
+  }
+  return 'resolved'
 }
