@@ -31,6 +31,7 @@ export default function(state = initialState, action) {
         }
       }
     case TicketActionTypes.TICKETS_FETCHED:
+    case TicketActionTypes.TICKET_UPDATED:
       const ticketIndex = buildTicketIndexes(state.index, action.data)
       return {
         ...state,
